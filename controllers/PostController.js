@@ -1,8 +1,10 @@
 const pool = require('../DataBase');
+const validation = require('../helpers/validation');
 
 const createPost = async (req, res) => {
+  const isValid = validation.createPostValidation(req, res);
+  if (isValid === false) return;
   const payload = req.body;
-  //
   const query =
     'INSERT INTO posts (titulo, img, descripcion, likes) VALUES ($1, $2, $3, $4) RETURNING *'; //consulta sql
   const values = [
